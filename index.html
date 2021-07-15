@@ -1,5 +1,579 @@
 <html>
+  <header>
+    <title>Model for Identifying Locations</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8">
+  </header>
   <body>
-    <h1>Hello world</h1>
+    <h1>Model for Identifying Locations</h1>
+    <p>By Alec Situ, Justin Wickelgren, and Surya Kolluri</p>
+    <h2>Model</h2>
+    <p>We used a pretrained named-entity recognition (NER) model from spaCy.</p>
+    <h2>Resources</h2>
+    <a href="https://spacy.io/">spaCy Library</a>
+    <h2>Code</h2>
+    <a href="model.html">Our Code</a>
+    <h2>Results</h2>
+    <p>Here are our results:</p>
+    <table>
+      <tr>
+        <th>Number</th>
+        <th>Poem Title</th>
+        <th>Results</th>
+        <th>Correct?</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>To a Chameleon</td>
+        <td>The Dark King</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Fear is Hope</td>
+        <td>Arab, Moorish</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Is Your Town Nineveh?</td>
+        <td>Nineveh, the Statue of Liberty</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>A Fool, a Foul Thing, a Distressful Lunatic</td>
+        <td>Egyptian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>An Egyptian Pulled Glass Bottle in the Shape of a Fish</td>
+        <td>Egyptian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>George Moore</td>
+        <td>French</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>To the Peacock of France</td>
+        <td>France</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>To Statecraft Embalmed</td>
+        <td>Egyptian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>The Past is the Present</td>
+        <td>XY, Hebrew</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Sojourn in the Whale</td>
+        <td>Ireland</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>My Apish Cousins</td>
+        <td>Gilgamesh</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>In the Days of Prismatic Color,</td>
+        <td>Adam</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Dock Rats</td>
+        <td>Brazil</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>Picking And Choosing</td>
+        <td>French, Chinese</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>England</td>
+        <td>England, Italy, Greece, France, East, America, Greek, American, China, Egyptian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td>Those Various Scalpels</td>
+        <td>French, Persia</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td>The Labors of Hercules</td>
+        <td>Oriental, German</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td>New York</td>
+        <td>New York, Allegheny</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td>People’s Surroundings</td>
+        <td>china, Persian, Chinese, Utah, Texas, American</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td>Snakes, Mongooses, Snake-Charmers, and the Like</td>
+        <td>Greek</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td>Bowls</td>
+        <td>Chinese</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>22</td>
+        <td>Novices</td>
+        <td>Egypt, Jeremiah</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>23</td>
+        <td>Marriage</td>
+        <td>German, French, Persian, Hesperides, Columbus, Roman</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td>An Octopus</td>
+        <td>American, Big Snow Mountain, Niagara, Canada, Indian, Larkspur, Persian, Greek, Greece, Mount Tacoma</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>25</td>
+        <td>Sea Unicorns and Land Unicorns</td>
+        <td>Antarctica, Florida, china, Britannia, Ecuador, Venice</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>26</td>
+        <td>Part of a Novel, Part of a Poem, Part of a Play</td>
+        <td>America, French, Veritas, Christo, Oriental, a D. D., Montana, Downpour, Swordfish, France</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>27</td>
+        <td>No Swan So Fine</td>
+        <td>Versailles, china, the Louis Fifteenth</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>28</td>
+        <td>The Jerboa</td>
+        <td>Pompeys, Vatican, Nile, Sahara, Rome, Bedouin</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>29</td>
+        <td>Camellia Sabina</td>
+        <td>France, French, Italy, the Prince of Tails, Spanish, Persian, Italian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>30</td>
+        <td>The Plumet Basilisk</td>
+        <td>Costa Rica, Chinese, East, Spaniards</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>31</td>
+        <td>The Frigate Pelican</td>
+        <td>German, Festina, Caribbean</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>32</td>
+        <td>The Buffalo</td>
+        <td>Augsburg, Swiss, Holstein, Vermont, Indian, Christian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>33</td>
+        <td>Nine Nectarines and Other Porcelain</td>
+        <td>Chinese, puce-American, Italian, Persian, China, Iceland, France, England</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>34</td>
+        <td>Pigeons</td>
+        <td>France, Hermes, Dutch, Baghdad, Britain, Nicobar, Dalmatian, Indians</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>35</td>
+        <td>Walking-Sticks and Paperweights and Watermarks</td>
+        <td>Titan, Spanish, Umbrian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>36</td>
+        <td>The Old Dominion</td>
+        <td>Virginia, England, Latin, Turk, Indian, Indians, Fort Old, Virginian, African, French, Persian, Egyptian, American, Dutch, South America, Zephyr, china, Psyche, West Wind, Chinese, New York, London, Japanese</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>37</td>
+        <td>Rigorists</td>
+        <td>Lapland, Alaska</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>38</td>
+        <td>Light is Speech</td>
+        <td>French, Voltaire, England, France</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>39</td>
+        <td>He "Digesteth Harde Yron"</td>
+        <td>Madagascar, Slike, Chinese</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td>Spenser’s Ireland</td>
+        <td>Ireland, Venus, Irish</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>41</td>
+        <td>Four Quartz Crystal Clocks</td>
+        <td>Arlington, Arabs, Jupiter</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>42</td>
+        <td>The Paper Nautilus</td>
+        <td>Parthenon</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>43</td>
+        <td>Elephants</td>
+        <td>Tooth</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>44</td>
+        <td>A Carriage from Sweden</td>
+        <td>Sweden, Brooklyn, Washington, Adolphus, Jews</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>45</td>
+        <td>In Distrust of Merits</td>
+        <td>David, Bethlehem</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>46</td>
+        <td>"Keeping Their World Large"</td>
+        <td>Italy</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>47</td>
+        <td>Efforts of Affection</td>
+        <td>Genesis, Jubal, Jabal, Vermin</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>48</td>
+        <td>The Icosasphere</td>
+        <td>Buckinghamshire, Egyptians</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>49</td>
+        <td>Pretiolae</td>
+        <td>Hartford, Rome</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>50</td>
+        <td>Armor’s Undermining Modesty</td>
+        <td>Persian, Spain, Roman, Mars</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>51</td>
+        <td>Apparition of Splendor</td>
+        <td>Maine</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>52</td>
+        <td>Tom Fool at Jamaica</td>
+        <td>Jamaica, Jonah, Spain</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>53</td>
+        <td>The Web One Weaves of Italy</td>
+        <td>Italy, Perugia, Saracen</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>54</td>
+        <td>The Staff of Aesculapius</td>
+        <td>Sumerian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>55</td>
+        <td>The Sycamore</td>
+        <td>Imami, Persian, Maltese, Versailles</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>56</td>
+        <td>Rosemary</td>
+        <td>Egypt</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>57</td>
+        <td>Style</td>
+        <td>Escudero, Iberian-American, alphabetS, El Greco</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>58</td>
+        <td>Logic and "The Magic Flute"</td>
+        <td>China</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>59</td>
+        <td>A Jellyfish</td>
+        <td>Jellyfish</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>60</td>
+        <td>Hometown Piece for Messrs. Alston and Reese</td>
+        <td>Reese, Brooklyn, Campanella, Dodger, Cimoli</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>61</td>
+        <td>Enough</td>
+        <td>the Old Pink Moss, French</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>62</td>
+        <td>Melchior Vulpius</td>
+        <td>Latin</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>63</td>
+        <td>No better than "a withered daffodil"</td>
+        <td>French</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>64</td>
+        <td>In the Public Garden</td>
+        <td>Boston, Cambridge, Back Bay, Faneuil Hall, Hamadan, Iran</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>65</td>
+        <td>The Arctic Ox (or Goat)</td>
+        <td>Vermont, Kashan, Mountain Valley</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>66</td>
+        <td>Saint Nicholas,</td>
+        <td>Greenland, St. Hubert, Santa Claus</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>67</td>
+        <td>For February th</td>
+        <td>Palestine, Noah</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>68</td>
+        <td>Combat Cultural</td>
+        <td>Russia, North’s Nan-ai-ans</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>69</td>
+        <td>Leonardo da Vinci’s</td>
+        <td>Nile, Leonardo da Vinci’s</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>70</td>
+        <td>Blue Bug</td>
+        <td>Chinese, China</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>71</td>
+        <td>To Victor Hugo of My Crow Pluto</td>
+        <td>U.S.A.</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>72</td>
+        <td>Baseball and Writing</td>
+        <td>Owlman, Cape Canaveral</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>73</td>
+        <td>To a Giraffe</td>
+        <td>Homer</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>74</td>
+        <td>Tell Me, Tell Me</td>
+        <td>Chinese, Taisez</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>75</td>
+        <td>Rescue with Yul Brynner</td>
+        <td>Tamara</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>76</td>
+        <td>Carnegie Hall: Rescued</td>
+        <td>Saint Diogenes, Venice</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>77</td>
+        <td>An Expedient—Leonardo da Vinci’s—and a Query</td>
+        <td>Rome</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>78</td>
+        <td>Granite and Steel</td>
+        <td>German, French</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>79</td>
+        <td>In Lieu of the Lyre</td>
+        <td>Chinese, Brooklyn, Mexico, French</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>80</td>
+        <td>The mind, intractable thing</td>
+        <td>Arizona, Zennor</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>81</td>
+        <td>Dream</td>
+        <td>Germany</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>82</td>
+        <td>Old Amusement Park</td>
+        <td>LaGuardia Airport</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>83</td>
+        <td>Charity Overcoming Envy</td>
+        <td>Flemish, French, Gordian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>84</td>
+        <td>Saint Valentine,</td>
+        <td>El Greco</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>85</td>
+        <td>I’ve been Thinking . . .</td>
+        <td>Attic, calico-Greek</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>86</td>
+        <td>Love in America?</td>
+        <td>America</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>87</td>
+        <td>The Camperdown Elm</td>
+        <td>Prospect Park, Brooklyn, Paris</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>88</td>
+        <td>The Magician’s Retreat</td>
+        <td>Magician</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>89</td>
+        <td>Counseil to a Bacheler</td>
+        <td>Bodleian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>90</td>
+        <td>Diogenes</td>
+        <td>Persian</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>91</td>
+        <td>You Say You Said</td>
+        <td>Germany</td>
+        <td class="yes">Yes</td>
+      </tr>
+      <tr>
+        <td>92</td>
+        <td>Old Tiger</td>
+        <td>American</td>
+        <td class="yes">Yes</td>
+      </tr>
+    </table>
   </body>
 </html>

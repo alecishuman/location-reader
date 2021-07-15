@@ -1,0 +1,17 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+.yes {
+    background-color: limegreen;
+    width: 93.5%;
+    height: 100%;
+    display: block;
+}
+
+.no {
+    background-color: red;
+    width: 93.5%;
+    height: 100%;
+    display: block;
+}
